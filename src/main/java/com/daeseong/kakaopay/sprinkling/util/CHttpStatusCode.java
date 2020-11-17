@@ -1,7 +1,6 @@
-package com.daeseong.kakaopay.sprinkling.dto;
+package com.daeseong.kakaopay.sprinkling.util;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum CHttpStatusCode {

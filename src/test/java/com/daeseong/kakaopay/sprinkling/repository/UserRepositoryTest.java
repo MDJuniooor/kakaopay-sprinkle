@@ -19,9 +19,17 @@ public class UserRepositoryTest {
     UserRepository userRepository;
 
     @Test
-    public void findUser(){
+    public void shouldFindUser(){
+        User user = userRepository.findOne(1L);
+
+        assertEquals((long)user.getId(), 1L);
+    }
+
+    @Test
+    public void shouldCreateUser(){
         User user = new User();
         userRepository.save(user);
-        assertEquals(user, userRepository.findOne(user.getId()));
+
+        assertNotNull(user.getId());
     }
 }

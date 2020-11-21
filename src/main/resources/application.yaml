@@ -16,3 +16,8 @@ logging:
     level:
         org.hibernate.SQL: debug
         org.hibernate.type: trace
+
+redis:
+  hostname: 127.0.0.1
+  port: 6379
+  timeout: 10000

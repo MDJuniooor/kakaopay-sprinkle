@@ -3,10 +3,7 @@ package com.daeseong.kakaopay.sprinkling.service;
 import com.daeseong.kakaopay.sprinkling.advice.exception.BusinessException;
 import com.daeseong.kakaopay.sprinkling.contants.BusinessStatusCode;
 import com.daeseong.kakaopay.sprinkling.entity.*;
-import com.daeseong.kakaopay.sprinkling.repository.RoomJoinInfoRepository;
-import com.daeseong.kakaopay.sprinkling.repository.RoomRepository;
-import com.daeseong.kakaopay.sprinkling.repository.SprinklingMoneyRepository;
-import com.daeseong.kakaopay.sprinkling.repository.UserRepository;
+import com.daeseong.kakaopay.sprinkling.repository.*;
 import com.daeseong.kakaopay.sprinkling.util.KakaoPayRandomGenerator;
 import com.daeseong.kakaopay.sprinkling.contants.SprinklingMoneyConstant;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +25,7 @@ public class SprinklingMoneyService {
     private final RoomJoinInfoRepository roomJoinInfoRepository;
     private final UserRepository userRepository;
     private final SprinklingMoneyRepository sprinklingMoneyRepository;
+    private final TokenCacheRepository tokenCacheRepository;
 
     public String execute(String roomId, Long userId, int numberForSprinkling, int amount){
         /**
@@ -59,9 +57,13 @@ public class SprinklingMoneyService {
     public String createToken(String roomId){
         KakaoPayRandomGenerator kakaoPayRandomGenerator = new KakaoPayRandomGenerator();
         String token = kakaoPayRandomGenerator.createRandomString(TOKEN_LENGTH);
-        while(sprinklingMoneyRepository.findByTokenAndRoomIdForPickingUpMoney(token, roomId).size() > 0){
+        while(tokenCacheRepository.existsToken(token, roomId)){
             token = kakaoPayRandomGenerator.createRandomString(TOKEN_LENGTH);
-        }
+        };
+        tokenCacheRepository.setToken(token, roomId);
+//        while(sprinklingMoneyRepository.findByTokenAndRoomIdForPickingUpMoney(token, roomId).size() > 0){
+//            token = kakaoPayRandomGenerator.createRandomString(TOKEN_LENGTH);
+//        }
         return token;
     }
 

@@ -19,11 +19,17 @@ public class RoomRepositoryTest {
     RoomRepository roomRepository;
 
     @Test
-    public void findRoom(){
+    public void shouldFindRoom(){
+        Room room = roomRepository.findOne("1-room");
+        assertEquals(room.getId(), "1-room");
+    }
+
+    @Test
+    public void shouldCreateRoom(){
         Room room = new Room();
         roomRepository.save(room);
-        System.out.println(room.getId());
-        assertEquals(room, roomRepository.findOne(room.getId()));
+
+        assertNotNull(room.getId());
     }
 
 

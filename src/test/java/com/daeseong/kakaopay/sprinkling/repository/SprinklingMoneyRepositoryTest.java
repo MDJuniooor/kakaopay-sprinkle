@@ -28,7 +28,7 @@ public class SprinklingMoneyRepositoryTest {
     SprinklingMoneyRepository sprinklingMoneyRepository;
 
     @Test
-    public void createSprinklingMoney(){
+    public void shouldCreateSprinklingMoney(){
         List<User> users = createUsers(5);
         Room room = createRoom();
         joinRoomForUsers(users, room);
@@ -51,7 +51,7 @@ public class SprinklingMoneyRepositoryTest {
     }
 
     @Test
-    public void findValidSprinklingMoneyForGettingMoney() {
+    public void shouldFindValidSprinklingMoneyForGettingMoney() {
         List<User> users = createUsers(5);
         Room room = createRoom();
         joinRoomForUsers(users, room);
@@ -61,7 +61,7 @@ public class SprinklingMoneyRepositoryTest {
         SprinklingMoney sprinklingMoney = SprinklingMoney.createSprinklingMoney(users.get(0),room,token,amount,sprinklingMoneyDistributionInfos);
         sprinklingMoneyRepository.save(sprinklingMoney);
 
-        assertEquals(sprinklingMoneyRepository.findByTokenAndRoomIdForGettingMoney(token, room.getId()).size(),1);
+        assertEquals(sprinklingMoneyRepository.findByTokenAndRoomIdForPickingUpMoney(token, room.getId()).size(),1);
 
     }
 

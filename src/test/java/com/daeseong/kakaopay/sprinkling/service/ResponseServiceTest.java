@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -58,17 +55,4 @@ public class ResponseServiceTest {
 
     }
 
-    @Test
-    public void successMultipleResponse() {
-        int code = HttpStatusCode.HTTP_200_OK.getCode();
-        String msg = HttpStatusCode.HTTP_200_OK.getMsg();
-        List<String> data = new ArrayList<String>();
-        data.add("test");
-
-        MultipleResponse multipleResponse = responseService.getMultipleResponse(data, code, msg);
-
-        assertEquals(multipleResponse.getData(), data);
-        assertEquals(multipleResponse.getCode(), code);
-        assertEquals(multipleResponse.getMsg(), msg);
-    }
 }

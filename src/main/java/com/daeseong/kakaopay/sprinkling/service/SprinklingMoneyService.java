@@ -57,13 +57,12 @@ public class SprinklingMoneyService {
     public String createToken(String roomId){
         KakaoPayRandomGenerator kakaoPayRandomGenerator = new KakaoPayRandomGenerator();
         String token = kakaoPayRandomGenerator.createRandomString(TOKEN_LENGTH);
+
         while(tokenCacheRepository.existsToken(token, roomId)){
             token = kakaoPayRandomGenerator.createRandomString(TOKEN_LENGTH);
         };
         tokenCacheRepository.setToken(token, roomId);
-//        while(sprinklingMoneyRepository.findByTokenAndRoomIdForPickingUpMoney(token, roomId).size() > 0){
-//            token = kakaoPayRandomGenerator.createRandomString(TOKEN_LENGTH);
-//        }
+
         return token;
     }
 

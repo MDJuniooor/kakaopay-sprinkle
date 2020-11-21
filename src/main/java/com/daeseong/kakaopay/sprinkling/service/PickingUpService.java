@@ -1,6 +1,6 @@
 package com.daeseong.kakaopay.sprinkling.service;
 
-import com.daeseong.kakaopay.sprinkling.advice.exception.InValidInputDataException;
+import com.daeseong.kakaopay.sprinkling.advice.exception.BusinessException;
 import com.daeseong.kakaopay.sprinkling.entity.*;
 import com.daeseong.kakaopay.sprinkling.repository.RoomJoinInfoRepository;
 import com.daeseong.kakaopay.sprinkling.repository.SprinklingMoneyDistributionInfoRepository;
@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.daeseong.kakaopay.sprinkling.contants.BusinessStatusCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -40,24 +42,24 @@ public class PickingUpService {
         List<RoomJoinInfo> roomJoinInfos = roomJoinInfoRepository.findByRoomIdAndUserId(roomId, userId);
 
         if (sprinklingMoney.size() == 0){
-            throw new InValidInputDataException("뿌리기 정보가 없거나 받기 가능한 기간이 지났습니다.");
+            throw new BusinessException(BE3004.getCode(), BE3004.getMsg());
         }
 
         if (roomJoinInfos.size() == 0){
-            throw new InValidInputDataException("참여하지 않은 채팅방입니다.");
+            throw new BusinessException(BE1001.getCode(), BE1001.getMsg());
         }
 
         if (sprinklingMoney.get(0).getCreator().getId() == userId) {
-            throw new InValidInputDataException("뿌리기를 한 사람은 받을 수 없습니다.");
+            throw new BusinessException(BE1003.getCode(), BE1003.getMsg());
         }
 
         if (sprinklingMoney.get(0).getAmountStatus() == AmountStatus.COMPLETED) {
-            throw new InValidInputDataException("남은 뿌리기 금액이 없습니다");
+            throw new BusinessException(BE3005.getCode(), BE3005.getMsg());
         }
 
         for (SprinklingMoneyDistributionInfo distributionInfo : sprinklingMoney.get(0).getSprinkingMoneyDistributionInfos()){
             if (distributionInfo.getUser() != null && distributionInfo.getUser().getId() == userId){
-                throw  new InValidInputDataException("받기는 한번만 가능합니다.");
+                throw new BusinessException(BE1004.getCode(), BE1004.getMsg());
             }
         }
 

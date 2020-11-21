@@ -7,6 +7,7 @@ public enum HttpStatusCode {
 
     HTTP_200_OK(200, "성공"),
     HTTP_201_CREATED(201, "생성"),
+    HTTP_400_BAD_REQUEST(400, "잘못된 요청입니다"),
     HTTP_401_UNAUTHORIZED(401, "권한없음"),
     HTTP_403_FORBIDDEN(403, ""),
     HTTP_404_NOT_FOUND(404, "없음"),

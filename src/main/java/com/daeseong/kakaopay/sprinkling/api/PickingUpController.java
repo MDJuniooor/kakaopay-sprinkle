@@ -2,21 +2,18 @@ package com.daeseong.kakaopay.sprinkling.api;
 
 import com.daeseong.kakaopay.sprinkling.contants.HttpStatusCode;
 import com.daeseong.kakaopay.sprinkling.dto.BaseResponse;
-import com.daeseong.kakaopay.sprinkling.dto.ResponseDataForChecking;
 import com.daeseong.kakaopay.sprinkling.dto.ResponseDataForPickingUp;
 import com.daeseong.kakaopay.sprinkling.dto.SingleResponse;
-import com.daeseong.kakaopay.sprinkling.entity.SprinklingMoney;
 import com.daeseong.kakaopay.sprinkling.service.PickingUpService;
-import com.daeseong.kakaopay.sprinkling.service.SprinklingMoneyCheckingService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = {"3. 머니 뿌리기 받기 기능"})
+@Api(tags = {"3. 머니 줍기"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1")
-public class PickingUpController {
+public class PickingUpController{
 
     private final PickingUpService pickingUpService;
 

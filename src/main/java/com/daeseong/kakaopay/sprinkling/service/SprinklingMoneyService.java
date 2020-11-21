@@ -1,6 +1,7 @@
 package com.daeseong.kakaopay.sprinkling.service;
 
-import com.daeseong.kakaopay.sprinkling.advice.exception.InValidInputDataException;
+import com.daeseong.kakaopay.sprinkling.advice.exception.BusinessException;
+import com.daeseong.kakaopay.sprinkling.contants.BusinessStatusCode;
 import com.daeseong.kakaopay.sprinkling.entity.*;
 import com.daeseong.kakaopay.sprinkling.repository.RoomJoinInfoRepository;
 import com.daeseong.kakaopay.sprinkling.repository.RoomRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.daeseong.kakaopay.sprinkling.contants.BusinessStatusCode.*;
 import static com.daeseong.kakaopay.sprinkling.contants.SprinklingMoneyConstant.TOKEN_LENGTH;
 
 @Service
@@ -67,27 +69,36 @@ public class SprinklingMoneyService {
     public void validate(String roomId, Long userId, int numberForSprinkling, int amount){
         Room room = roomRepository.findOne(roomId);
         List<RoomJoinInfo> roomMembers = roomJoinInfoRepository.findByRoomId(roomId);
+        BusinessException e = new BusinessException(BE2001.getCode(), BE2001.getMsg());
 
         if (room == null) {
-            throw new InValidInputDataException("채팅방이 존재하지 않습니다.");
+            throw new BusinessException(BE2001.getCode(), BE2001.getMsg());
         }
 
         if (roomMembers.size() < 2) {
-            throw new InValidInputDataException("채팅방의 멤버는 적어도 2명 이상 이어야 합니다.");
+            throw new BusinessException(BE2002.getCode(), BE2002.getMsg());
         }
 
         if (roomMembers.stream()
                 .filter(m -> m.getUser().getId() == userId)
                 .count() == 0){
-            throw new InValidInputDataException("참여하지 않은 채팅방입니다.");
+            throw new BusinessException(BE1001.getCode(), BE1001.getMsg());
         }
 
         if (roomMembers.size() <= numberForSprinkling){
-            throw new InValidInputDataException("뿌리기를 받을 멤버의 수는 채팅방 참여 멤버의 수보다 더 적야 합니다");
+            throw new BusinessException(BE3001.getCode(), BE3001.getMsg());
         }
 
         if (amount < numberForSprinkling) {
-            throw new InValidInputDataException("뿌릴 돈은 멤버 수보다 커야 합니다.");
+            throw new BusinessException(BE3002.getCode(), BE3002.getMsg());
+        }
+
+        if (amount <= 0) {
+            throw new BusinessException(BE3006.getCode(), BE3006.getMsg());
+        }
+
+        if (numberForSprinkling <= 0) {
+            throw new BusinessException(BE1005.getCode(), BE1005.getMsg());
         }
     }
 

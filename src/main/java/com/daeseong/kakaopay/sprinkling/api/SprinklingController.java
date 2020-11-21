@@ -1,7 +1,5 @@
 package com.daeseong.kakaopay.sprinkling.api;
 
-import com.daeseong.kakaopay.sprinkling.dto.BaseResponse;
-import com.daeseong.kakaopay.sprinkling.dto.ResponseDataForChecking;
 import com.daeseong.kakaopay.sprinkling.dto.ResponseDataForSprinkling;
 import com.daeseong.kakaopay.sprinkling.dto.SingleResponse;
 import com.daeseong.kakaopay.sprinkling.service.SprinklingMoneyService;
@@ -16,7 +14,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(tags = {"1. 머니 뿌리기 기능"})
+@Api(tags = {"1. 머니 뿌리기"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1")
@@ -32,7 +30,7 @@ public class SprinklingController {
         ResponseDataForSprinkling responseDataForSprinkling;
         int code;
         String msg;
-        String token = sprinklingMoneyService.execute(roomId, userId, request.getNumberOfMembers(), request.getAmount());
+        String token = sprinklingMoneyService.execute(roomId, userId, request.getNumberForPickingUp(), request.getAmount());
 
         if (token != SprinklingMoneyConstant.TOKEN_CREATE_FAILURE){
             responseDataForSprinkling = new ResponseDataForSprinkling(token);
@@ -50,7 +48,7 @@ public class SprinklingController {
 
     @Data
     static class SprinkleMoneyRequest {
-        private int numberOfMembers;
+        private int numberForPickingUp;
         private int amount;
     }
 }

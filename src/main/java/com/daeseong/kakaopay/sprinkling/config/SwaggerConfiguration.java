@@ -23,7 +23,7 @@ public class SwaggerConfiguration {
     }
 
     private ApiInfo swaggerInfo() {
-        return new ApiInfoBuilder().title("Spring API Documentation")
+        return new ApiInfoBuilder().title("KaKaoPay 뿌리기 API 문서")
                 .description("뿌리기 기능 설명을 위한 문서입니다.")
                 .license("daeseong.mun").version("1").build();
     }

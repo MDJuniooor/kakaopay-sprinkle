@@ -1,6 +1,6 @@
 package com.daeseong.kakaopay.sprinkling.service;
 
-import com.daeseong.kakaopay.sprinkling.advice.exception.InValidInputDataException;
+import com.daeseong.kakaopay.sprinkling.advice.exception.BusinessException;
 import com.daeseong.kakaopay.sprinkling.entity.*;
 import com.daeseong.kakaopay.sprinkling.repository.RoomJoinInfoRepository;
 import com.daeseong.kakaopay.sprinkling.repository.RoomRepository;
@@ -63,7 +63,7 @@ public class SprinklingMoneyCheckingServiceTest {
 
     }
 
-    @Test(expected = InValidInputDataException.class)
+    @Test(expected = BusinessException.class)
     public void failGetSprinklingMoneyInfoUsingWrongRoomId(){
         SprinklingMoney sprinklingMoney = sprinklingMoneyRepository.findOne(1L);
         String roomId = "wrong-room-id";
@@ -75,7 +75,7 @@ public class SprinklingMoneyCheckingServiceTest {
         fail("예외 발생");
     }
 
-    @Test(expected = InValidInputDataException.class)
+    @Test(expected = BusinessException.class)
     public void failGetSprinklingMoneyInfoUsingWrongCreatorId(){
         SprinklingMoney sprinklingMoney = sprinklingMoneyRepository.findOne(1L);
         String roomId = sprinklingMoney.getRoom().getId();
@@ -87,7 +87,7 @@ public class SprinklingMoneyCheckingServiceTest {
         fail("예외 발생");
     }
 
-    @Test(expected = InValidInputDataException.class)
+    @Test(expected = BusinessException.class)
     public void failGetSprinklingMoneyInfoUsingWrongToken(){
         SprinklingMoney sprinklingMoney = sprinklingMoneyRepository.findOne(1L);
         String roomId = sprinklingMoney.getRoom().getId();
@@ -100,7 +100,7 @@ public class SprinklingMoneyCheckingServiceTest {
 
     }
 
-    @Test(expected = InValidInputDataException.class)
+    @Test(expected = BusinessException.class)
     public void failGetSprinklingMoneyInfoUsingInValidTimeForRead(){
         SprinklingMoney sprinklingMoney = sprinklingMoneyRepository.findOne(1L);
         sprinklingMoney.setValidTimeForRead(LocalDateTime.now().minusMinutes(10));

@@ -1,8 +1,7 @@
 package com.daeseong.kakaopay.sprinkling.service;
 
 import com.daeseong.kakaopay.sprinkling.dto.BaseResponse;
-import com.daeseong.kakaopay.sprinkling.dto.CHttpStatusCode;
-import com.daeseong.kakaopay.sprinkling.dto.MultipleResponse;
+import com.daeseong.kakaopay.sprinkling.contants.HttpStatusCode;
 import com.daeseong.kakaopay.sprinkling.dto.SingleResponse;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,8 +23,8 @@ public class ResponseServiceTest {
 
     @Test
     public void failBasicResponse() {
-        int code = CHttpStatusCode.HTTP_500_INTERNAL_SERVER_ERROR.getCode();
-        String msg  = CHttpStatusCode.HTTP_500_INTERNAL_SERVER_ERROR.getMsg();
+        int code = HttpStatusCode.HTTP_500_INTERNAL_SERVER_ERROR.getCode();
+        String msg  = HttpStatusCode.HTTP_500_INTERNAL_SERVER_ERROR.getMsg();
 
         BaseResponse baseResponse =  responseService.getFailResponse(code, msg);
 
@@ -35,8 +34,8 @@ public class ResponseServiceTest {
 
     @Test
     public void successBasicResponse() {
-        int code = CHttpStatusCode.HTTP_200_OK.getCode();
-        String msg = CHttpStatusCode.HTTP_200_OK.getMsg();
+        int code = HttpStatusCode.HTTP_200_OK.getCode();
+        String msg = HttpStatusCode.HTTP_200_OK.getMsg();
 
         BaseResponse baseResponse = responseService.getSuccessResponse(code, msg);
 
@@ -47,8 +46,8 @@ public class ResponseServiceTest {
 
     @Test
     public void successSingleResponse() {
-        int code = CHttpStatusCode.HTTP_200_OK.getCode();
-        String msg = CHttpStatusCode.HTTP_200_OK.getMsg();
+        int code = HttpStatusCode.HTTP_200_OK.getCode();
+        String msg = HttpStatusCode.HTTP_200_OK.getMsg();
         String data = "test";
 
         SingleResponse singleResponse = responseService.getSingleResponse(data, code, msg);
@@ -61,8 +60,8 @@ public class ResponseServiceTest {
 
     @Test
     public void successMultipleResponse() {
-        int code = CHttpStatusCode.HTTP_200_OK.getCode();
-        String msg = CHttpStatusCode.HTTP_200_OK.getMsg();
+        int code = HttpStatusCode.HTTP_200_OK.getCode();
+        String msg = HttpStatusCode.HTTP_200_OK.getMsg();
         List<String> data = new ArrayList<String>();
         data.add("test");
 

@@ -1,7 +1,7 @@
 package com.daeseong.kakaopay.sprinkling.advice;
 
 import com.daeseong.kakaopay.sprinkling.dto.BaseResponse;
-import com.daeseong.kakaopay.sprinkling.dto.CHttpStatusCode;
+import com.daeseong.kakaopay.sprinkling.contants.HttpStatusCode;
 import com.daeseong.kakaopay.sprinkling.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,8 +20,8 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected BaseResponse defaultException(HttpServletRequest request, Exception e) {
-        int code = CHttpStatusCode.HTTP_500_INTERNAL_SERVER_ERROR.getCode();
-        String msg = CHttpStatusCode.HTTP_500_INTERNAL_SERVER_ERROR.getMsg();
+        int code = HttpStatusCode.HTTP_500_INTERNAL_SERVER_ERROR.getCode();
+        String msg = HttpStatusCode.HTTP_500_INTERNAL_SERVER_ERROR.getMsg();
 
         return responseService.getFailResponse(code, msg);
     }

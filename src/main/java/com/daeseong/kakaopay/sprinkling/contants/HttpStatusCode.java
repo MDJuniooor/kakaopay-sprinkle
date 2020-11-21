@@ -1,9 +1,9 @@
-package com.daeseong.kakaopay.sprinkling.util;
+package com.daeseong.kakaopay.sprinkling.contants;
 
 import lombok.Getter;
 
 @Getter
-public enum CHttpStatusCode {
+public enum HttpStatusCode {
 
     HTTP_200_OK(200, "성공"),
     HTTP_201_CREATED(201, "생성"),
@@ -16,7 +16,7 @@ public enum CHttpStatusCode {
     int code;
     String msg;
 
-    CHttpStatusCode(int code, String msg){
+    HttpStatusCode(int code, String msg){
         this.code = code;
         this.msg = msg;
     }

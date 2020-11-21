@@ -58,3 +58,7 @@ public class TokenCacheRepository{
 ## API 명세
 
 <img width="982" alt="스크린샷 2020-11-22 오전 1 58 26" src="https://user-images.githubusercontent.com/33591838/99882758-37d62700-2c66-11eb-8baa-1687cfd4318a.png">
+
+![image](https://user-images.githubusercontent.com/33591838/99882810-808de000-2c66-11eb-9313-6b380b0630ff.png)
+
+<img width="982" alt="스크린샷 2020-11-22 오전 2 01 30" src="https://user-images.githubusercontent.com/33591838/99882840-a61ae980-2c66-11eb-9000-d170536e1f70.png">

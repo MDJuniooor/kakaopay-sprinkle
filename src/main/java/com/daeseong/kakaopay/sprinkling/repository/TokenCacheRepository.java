@@ -10,7 +10,9 @@ import static com.daeseong.kakaopay.sprinkling.contants.SprinklingMoneyConstant.
 @Repository
 public class TokenCacheRepository{
 
-    private static final String TOKEN_KEY = "${token}-${roomId}";
+    private static final String TOKEN_KEY = "token-roomId";
+    private static final String TOKEN_PART = "token";
+    private static final String ROOM_ID_PART = "roomId";
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -21,7 +23,7 @@ public class TokenCacheRepository{
     }
 
     public boolean existsToken(String token, String roomId) {
-        String key = TOKEN_KEY.replace("token",token).replace("roomId",roomId);
+        String key = TOKEN_KEY.replace(TOKEN_PART, token).replace(ROOM_ID_PART, roomId);
 
         Boolean hasKey = stringRedisTemplate.hasKey(key);
 
@@ -29,7 +31,7 @@ public class TokenCacheRepository{
     }
 
     public void setToken(String token, String roomId) {
-        String key = TOKEN_KEY.replace("token",token).replace("roomId",roomId);
+        String key = TOKEN_KEY.replace(TOKEN_PART, token).replace(ROOM_ID_PART, roomId);
         stringRedisTemplate.opsForValue().set(key, "", VALID_MINUTES_FOR_PICKING_UP_MONEY, TimeUnit.MINUTES);
     }
 

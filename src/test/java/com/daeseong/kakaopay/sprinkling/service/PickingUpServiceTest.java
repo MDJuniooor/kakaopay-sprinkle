@@ -1,7 +1,10 @@
 package com.daeseong.kakaopay.sprinkling.service;
 
 import com.daeseong.kakaopay.sprinkling.advice.exception.BusinessException;
-import com.daeseong.kakaopay.sprinkling.entity.*;
+import com.daeseong.kakaopay.sprinkling.entity.Room;
+import com.daeseong.kakaopay.sprinkling.entity.SprinklingMoney;
+import com.daeseong.kakaopay.sprinkling.entity.SprinklingMoneyDistributionInfo;
+import com.daeseong.kakaopay.sprinkling.entity.User;
 import com.daeseong.kakaopay.sprinkling.repository.RoomJoinInfoRepository;
 import com.daeseong.kakaopay.sprinkling.repository.RoomRepository;
 import com.daeseong.kakaopay.sprinkling.repository.SprinklingMoneyRepository;
@@ -24,7 +27,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class SprinklingMoneyCheckingServiceTest {
+public class PickingUpServiceTest {
 
     @Autowired
     RoomJoinInfoRepository roomJoinInfoRepository;
@@ -35,7 +38,7 @@ public class SprinklingMoneyCheckingServiceTest {
     @Autowired
     SprinklingMoneyRepository sprinklingMoneyRepository;
     @Autowired
-    SprinklingMoneyCheckingService sprinklingMoneyCheckingService;
+    PickingUpService pickingUpService;
 
     private final Long USER_ID = 1L;
     private final String ROOM_ID = "3-room";
@@ -45,7 +48,7 @@ public class SprinklingMoneyCheckingServiceTest {
     public void setting(){
         User user = userRepository.findOne(USER_ID);
         Room room = roomRepository.findOne(ROOM_ID);
-        int numberForPickingUp = 2;
+        int numberForPickingUp = 1;
         int amount = 100;
 
         List<SprinklingMoneyDistributionInfo> sprinklingMoneyDistributionInfos = createSprinklingMoneyDistributionInfos(numberForPickingUp, amount);
@@ -54,50 +57,66 @@ public class SprinklingMoneyCheckingServiceTest {
     }
 
     @Test
-    public void shouldGetSprinklingMoneyInfoSuccess() {
+    public void shouldPickUpMoneySuccess() {
+        Long userId = 2L;
+        int pickedUpAmount = 0;
+
+        pickedUpAmount = pickingUpService.execute(ROOM_ID, userId, TOKEN);
+
+        assertNotEquals(pickedUpAmount, 0);
+
+    }
+
+    @Test(expected = BusinessException.class)
+    public void shouldPickUpMoneyFailForBE1001(){
+        Long strangeUserId = 4L;
+
+        pickingUpService.execute(ROOM_ID, strangeUserId, TOKEN);
+
+        fail("예외 발생");
+
+    }
+
+    @Test(expected = BusinessException.class)
+    public void shouldPickUpMoneyFailForBE1003(){
+
+        pickingUpService.execute(ROOM_ID, USER_ID, TOKEN);
+
+        fail("예외 발생");
+
+    }
+
+    @Test(expected = BusinessException.class)
+    public void shouldPickUpMoneyFailForBE1004(){
+        Long userId = 2L;
+
+        pickingUpService.execute(ROOM_ID, userId, TOKEN);
+        pickingUpService.execute(ROOM_ID, userId, TOKEN);
+
+        fail("예외 발생");
+    }
+
+    @Test(expected = BusinessException.class)
+    public void shouldPickUpMoneyFailForBE3004(){
+        Long userId = 2L;
+
         SprinklingMoney sprinklingMoney = sprinklingMoneyRepository.findByTokenAndRoomIdForPickingUpMoney(TOKEN, ROOM_ID).get(0);
-
-        SprinklingMoney findSprinklingMoney = sprinklingMoneyCheckingService.execute(ROOM_ID, USER_ID, TOKEN);
-
-        assertEquals(sprinklingMoney, findSprinklingMoney);
-
-    }
-
-    @Test(expected = BusinessException.class)
-    public void shouldGetSprinklingMoneyInfoFailForBE1001(){
-        String strangeRoomId = "wrong-room-id";
-
-        sprinklingMoneyCheckingService.execute(strangeRoomId, USER_ID, TOKEN);
-
-        fail("예외 발생");
-    }
-
-    @Test(expected = BusinessException.class)
-    public void shouldGetSprinklingMoneyInfoFailForBE1002(){
-        Long strangeUserId = 2L;
-
-        sprinklingMoneyCheckingService.execute(ROOM_ID, strangeUserId, TOKEN);
-
-        fail("예외 발생");
-    }
-
-    @Test(expected = BusinessException.class)
-    public void shouldGetSprinklingMoneyInfoFailForBE3003WithWrongToken(){
-        String strangeToken = "wrong-token";
-
-        sprinklingMoneyCheckingService.execute(ROOM_ID, USER_ID, strangeToken);
-
-        fail("예외 발생");
-    }
-
-
-    @Test(expected = BusinessException.class)
-    public void shouldGetSprinklingMoneyInfoFailForBE3003WithTokenExpired(){
-        SprinklingMoney sprinklingMoney = sprinklingMoneyRepository.findByTokenAndRoomIdForPickingUpMoney(TOKEN, ROOM_ID).get(0);
-        sprinklingMoney.setValidTimeForRead(LocalDateTime.now().minusMinutes(10));
+        sprinklingMoney.setValidTimeForPickingUpMoney(LocalDateTime.now().minusMinutes(10));
         sprinklingMoneyRepository.save(sprinklingMoney);
 
-        sprinklingMoneyCheckingService.execute(ROOM_ID, USER_ID, TOKEN);
+        pickingUpService.execute(ROOM_ID, userId, TOKEN);
+
+        fail("예외 발생");
+
+    }
+
+    @Test(expected = BusinessException.class)
+    public void shouldPickUpMoneyFailForBE3005(){
+        Long firstUserId = 2L;
+        Long secondUserId = 3L;
+
+        pickingUpService.execute(ROOM_ID, firstUserId, TOKEN);
+        pickingUpService.execute(ROOM_ID, secondUserId, TOKEN);
 
         fail("예외 발생");
 

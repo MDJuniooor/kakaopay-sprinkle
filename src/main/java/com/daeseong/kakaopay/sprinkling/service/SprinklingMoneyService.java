@@ -70,7 +70,6 @@ public class SprinklingMoneyService {
     public void validate(String roomId, Long userId, int numberForSprinkling, int amount){
         Room room = roomRepository.findOne(roomId);
         List<RoomJoinInfo> roomMembers = roomJoinInfoRepository.findByRoomId(roomId);
-        BusinessException e = new BusinessException(BE2001.getCode(), BE2001.getMsg());
 
         if (room == null) {
             throw new BusinessException(BE2001.getCode(), BE2001.getMsg());
@@ -92,10 +91,6 @@ public class SprinklingMoneyService {
 
         if (amount < numberForSprinkling) {
             throw new BusinessException(BE3002.getCode(), BE3002.getMsg());
-        }
-
-        if (amount <= 0) {
-            throw new BusinessException(BE3006.getCode(), BE3006.getMsg());
         }
 
         if (numberForSprinkling <= 0) {

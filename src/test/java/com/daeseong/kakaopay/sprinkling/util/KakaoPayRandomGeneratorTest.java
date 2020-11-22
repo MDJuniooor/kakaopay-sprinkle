@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class KakaoPayRandomGeneratorTest {
 
     @Test
-    public void testCreateMoneyForDistribution(){
+    public void shouldCreateMoneyForDistribution(){
         KakaoPayRandomGenerator kakaoPayRandomGenerator = new KakaoPayRandomGenerator();
         int number = 2; int amount = 10;
         List<Integer> result = null;
@@ -58,7 +58,7 @@ public class KakaoPayRandomGeneratorTest {
     }
 
     @Test
-    public void testCreateRandomString(){
+    public void shouldCreateRandomString(){
         KakaoPayRandomGenerator kakaoPayRandomGenerator = new KakaoPayRandomGenerator();
 
         assertEquals(kakaoPayRandomGenerator.createRandomString(1).length(),1);
@@ -76,7 +76,7 @@ public class KakaoPayRandomGeneratorTest {
     }
 
     @Test
-    public void testCreateRandomStringFailure(){
+    public void shouldCreateRandomStringFailure(){
         KakaoPayRandomGenerator kakaoPayRandomGenerator = new KakaoPayRandomGenerator();
 
         assertEquals(kakaoPayRandomGenerator.createRandomString(-1),kakaoPayRandomGenerator.CREATE_FAILURE);

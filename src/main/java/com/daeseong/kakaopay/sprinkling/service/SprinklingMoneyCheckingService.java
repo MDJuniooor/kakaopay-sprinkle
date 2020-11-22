@@ -21,24 +21,25 @@ public class SprinklingMoneyCheckingService {
 
     public SprinklingMoney execute(String roomId, Long userId, String token){
         List<SprinklingMoney> sprinklingMoney = sprinklingMoneyRepository.findByTokenAndRoomIdForRead(token, roomId);
-        validate(roomId, userId, sprinklingMoney);
+        validate(roomId, userId, token, sprinklingMoney);
         return sprinklingMoney.get(0);
     }
 
-    private void validate(String roomId, Long userId, List<SprinklingMoney> sprinklingMoney) {
+    private void validate(String roomId, Long userId, String token, List<SprinklingMoney> sprinklingMoney) {
         List<RoomJoinInfo> roomJoinInfos = roomJoinInfoRepository.findByRoomIdAndUserId(roomId, userId);
-
-        if (sprinklingMoney.size() == 0){
-            throw new BusinessException(BE3003.getCode(), BE3003.getMsg());
-        }
 
         if (roomJoinInfos.size() == 0){
             throw new BusinessException(BE1001.getCode(), BE1001.getMsg());
         }
 
+        if (sprinklingMoney.size() == 0){
+            throw new BusinessException(BE3003.getCode(), BE3003.getMsg());
+        }
+
         if (sprinklingMoney.get(0).getCreator().getId() != userId) {
             throw new BusinessException(BE1002.getCode(), BE1002.getMsg());
         }
+
 
     }
 }

@@ -18,7 +18,7 @@ public class PickingUpController{
     private final PickingUpService pickingUpService;
 
     @PutMapping("/pickup/{token}")
-    public BaseResponse pickUpMoney(@RequestHeader(name = "X-ROOM-ID") String roomId,
+    public SingleResponse pickUpMoney(@RequestHeader(name = "X-ROOM-ID") String roomId,
                                     @RequestHeader(name = "X-USER-ID") Long userId,
                                     @PathVariable("token") String token){
         int amount = pickingUpService.execute(roomId, userId, token);

@@ -98,3 +98,6 @@ public class TokenCacheRepository{
 3.6 BE3006 : 코드 - 3006, 상세 - 뿌릴 돈은 0원 보다 커야 합니다.  
 
 ## 데이터베이스 스키마
+
+![image](https://user-images.githubusercontent.com/33591838/99895933-178e8280-2ccf-11eb-8099-8b06c6c53190.png)
+

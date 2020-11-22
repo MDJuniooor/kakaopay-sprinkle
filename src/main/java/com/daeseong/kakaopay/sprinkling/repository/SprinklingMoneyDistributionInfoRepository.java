@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import java.util.List;
 
 @Repository
@@ -34,6 +35,7 @@ public class SprinklingMoneyDistributionInfoRepository {
                         "and smdi.amountStatus = :available", SprinklingMoneyDistributionInfo.class)
                 .setParameter("sprinklingMoneyId", sprinklingMoneyId)
                 .setParameter("available", AmountStatus.AVAILABLE)
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .getResultList();
     }
 

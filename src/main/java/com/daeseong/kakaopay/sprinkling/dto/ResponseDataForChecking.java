@@ -14,18 +14,18 @@ public class ResponseDataForChecking {
     private String createdAt;
     private int amount;
     private int completedAmount;
-    private List<SprinklingMoneyDistributionInfoDto> sprinklingMoneyDistributionInfoDtos;
+    private List<SprinklingMoneyDistributionInfoDto> distributionInfo;
 
     public ResponseDataForChecking(SprinklingMoney sprinklingMoney){
         this.amount = sprinklingMoney.getAmount();
         this.createdAt = sprinklingMoney.getCreatedAt().toString();
         this.completedAmount = 0;
-        this.sprinklingMoneyDistributionInfoDtos = new ArrayList<>();
+        this.distributionInfo = new ArrayList<>();
 
         for( SprinklingMoneyDistributionInfo distributionInfo: sprinklingMoney.getSprinkingMoneyDistributionInfos()){
             if (distributionInfo.getAmountStatus() == AmountStatus.COMPLETED){
                 this.completedAmount += distributionInfo.getAmount();
-                this.sprinklingMoneyDistributionInfoDtos.add(
+                this.distributionInfo.add(
                         new SprinklingMoneyDistributionInfoDto(distributionInfo.getUser().getId(), distributionInfo.getAmount())
                 );
             }

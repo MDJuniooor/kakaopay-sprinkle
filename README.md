@@ -83,7 +83,6 @@ request header에 X-ROOM-ID와 X-USER-ID는 필수값이다.
 * 하단에 비즈니스 상태 코드 참조  
 [상태 코드 정의](#상태-코드-정의)
 
-** 아래 비즈니스
 ### 1. 머니 뿌리기  
 
 <img width="982" alt="스크린샷 2020-11-22 오전 1 58 26" src="https://user-images.githubusercontent.com/33591838/99882758-37d62700-2c66-11eb-8baa-1687cfd4318a.png">
@@ -121,17 +120,17 @@ Response
   "code": 200,
   "msg": "성공",
   "data": {
-    "createdAt": "2020-11-22T20:23:09.712",
-    "amount": 100,
-    "completedAmount": 100,
-    "sprinklingMoneyDistributionInfoDtos": [
+    "createdAt": "2020-11-22T20:34:55.875",
+    "amount": 10000,
+    "completedAmount": 7965,
+    "distributionInfo": [
       {
         "userId": 2,
-        "amount": 86
+        "amount": 3600
       },
       {
         "userId": 3,
-        "amount": 14
+        "amount": 4365
       }
     ]
   }
